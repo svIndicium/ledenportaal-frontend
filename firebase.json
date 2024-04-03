@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "leden-svindicium",
     "public": "dist",
     "ignore": [
       "firebase.json",

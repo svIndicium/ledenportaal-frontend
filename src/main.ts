@@ -5,6 +5,7 @@
  */
 
 // Plugins
+// @ts-expect-error
 import { registerPlugins } from "@/plugins";
 
 // Components

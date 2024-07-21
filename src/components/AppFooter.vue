@@ -16,16 +16,16 @@
       class="text-caption text-disabled"
       style="position: absolute; right: 16px"
     >
-      &copy; 2016-{{ new Date().getFullYear() }}
-      <span class="d-none d-sm-inline-block">Vuetify, LLC</span>
+      &copy; 2017-{{ new Date().getFullYear() }}
+      <span class="d-none d-sm-inline-block">Studievereniging Indicium</span>
       —
       <a
         class="text-decoration-none on-surface"
-        href="https://vuetifyjs.com/about/licensing/"
+        href="https://svindicium.nl/commissies"
         rel="noopener noreferrer"
         target="_blank"
       >
-        MIT License
+        Development commissie
       </a>
     </div>
   </v-footer>
@@ -34,34 +34,34 @@
 <script setup lang="ts">
 const items = [
   {
-    title: "Vuetify Documentation",
-    icon: `$vuetify`,
-    href: "https://vuetifyjs.com/",
+    title: "Studievereniging Indicium",
+    icon: "mdi-home",
+    href: "https://svindicium.nl/",
   },
   {
-    title: "Vuetify Support",
-    icon: "mdi-shield-star-outline",
-    href: "https://support.vuetifyjs.com/",
+    title: "Instagram",
+    icon: "mdi-instagram",
+    href: "https://instagram.com/svindicium",
   },
   {
-    title: "Vuetify X",
-    icon: `svg:M2.04875 3.00002L9.77052 13.3248L1.99998 21.7192H3.74882L10.5519 14.3697L16.0486 21.7192H22L13.8437 10.8137L21.0765 3.00002H19.3277L13.0624 9.76874L8.0001 3.00002H2.04875ZM4.62054 4.28821H7.35461L19.4278 20.4308H16.6937L4.62054 4.28821Z`,
-    href: "https://x.com/vuetifyjs",
-  },
-  {
-    title: "Vuetify GitHub",
+    title: "Github",
     icon: `mdi-github`,
-    href: "https://github.com/vuetifyjs/vuetify",
+    href: "https://github.com/svIndicium/",
   },
   {
-    title: "Vuetify Discord",
-    icon: `mdi-discord`,
-    href: "https://community.vuetifyjs.com/",
+    title: "Discord",
+    icon: "mdi-discord",
+    href: "https://svindicium.nl/discord",
   },
   {
-    title: "Vuetify Reddit",
-    icon: `mdi-reddit`,
-    href: "https://reddit.com/r/vuetifyjs",
+    title: "LinkedIn",
+    icon: "mdi-linkedin",
+    href: "https://www.linkedin.com/company/s.v.indicium",
+  },
+  {
+    title: "Email",
+    icon: "mdi-email",
+    href: "mailto:bestuur@indicium.hu",
   },
 ];
 </script>

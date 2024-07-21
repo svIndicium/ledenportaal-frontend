@@ -2,8 +2,9 @@
   "compilerOptions": {
     "composite": true,
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
+    "types": ["node", "unplugin-vue-router/client"],
     "allowSyntheticDefaultImports": true
   },
-  "include": ["vite.config.mts"]
+  "include": ["vite.config.mts", "typed-router.d.ts"]
 }

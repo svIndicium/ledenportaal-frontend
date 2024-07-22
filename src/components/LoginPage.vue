@@ -51,15 +51,40 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+
+const auth = getAuth();
 
 const username = ref("");
 const password = ref("");
 
 function login() {
-  console.log("login dummy function");
+  signInWithEmailAndPassword(auth, username.value, password.value)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      console.log("User logged-in as: " + userCredential.user.email);
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log("User login failed: " + errorCode + " - " + errorMessage);
+    });
 }
 
 function register() {
-  console.log("register dummy function");
+  createUserWithEmailAndPassword(auth, username.value, password.value)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      console.log("User created as: " + userCredential.user.email);
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log("User creation failed: " + errorCode + " - " + errorMessage);
+    });
 }
 </script>

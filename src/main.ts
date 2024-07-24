@@ -17,7 +17,8 @@ import { createApp } from "vue";
 // firebase
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "firebase/auth";
+import { getAuth, connectAuthEmulator } from "firebase/auth";
+import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 const firebaseConfig = {
@@ -36,10 +37,25 @@ const firebaseConfig = {
 const firebaseapp = initializeApp(firebaseConfig);
 const analytics = getAnalytics(firebaseapp);
 const auth = getAuth(firebaseapp);
+const functions = getFunctions(firebaseapp, "europe-west1");
+
+if (process.env.NODE_ENV === "development") {
+  connectFunctionsEmulator(functions, "localhost", 5001);
+  connectAuthEmulator(auth, "http://localhost:9099", { disableWarnings: true });
+  console.info(`
+====[ Currently running in development mode ]====
+Make sure \`ledenportaal-backend\` is also running!
+Go to the folder and run \`npm run serve\`.
+  `);
+  console.warn(
+    "Running in DEV mode, do not use production credentials. All emulator traffic is unencrypted!"
+  );
+}
 
 const app = createApp(App);
 
 registerPlugins(app);
 
 app.mount("#app");
-console.log(auth.currentUser);
+
+export { app, auth, analytics, functions };

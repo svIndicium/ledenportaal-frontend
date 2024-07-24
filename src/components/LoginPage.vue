@@ -41,6 +41,9 @@
               Registreren
             </v-btn>
           </v-col>
+          <v-col cols="auto">
+            <v-btn @click="ping"> {{ result }} </v-btn>
+          </v-col>
         </v-row>
       </div>
       <div v-else>
@@ -64,12 +67,30 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import { httpsCallable } from "firebase/functions";
+
+import { functions } from "../main";
 
 const auth = getAuth();
 const authStore = useAuthStore();
 
 const username = ref("");
 const password = ref("");
+
+const result = ref("Ping");
+
+const ping = async () => {
+  result.value = "Pinging...";
+  const startTime = performance.now();
+  try {
+    const { data } = await httpsCallable(functions, "ping")(); // direct invocation of function
+    const responseTime = (performance.now() - startTime).toFixed(2);
+    result.value = `${data} : ${responseTime} ms`;
+  } catch (error) {
+    console.error("Error calling function:", error);
+    result.value = "Error: " + error.message;
+  }
+};
 
 onMounted(() => {
   authStore.initializeAuthListener();

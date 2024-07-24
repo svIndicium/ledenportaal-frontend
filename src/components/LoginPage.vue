@@ -83,9 +83,15 @@ const ping = async () => {
   result.value = "Pinging...";
   const startTime = performance.now();
   try {
-    const { data } = await httpsCallable(functions, "ping")(); // direct invocation of function
+    interface PingResponse {
+      message: string;
+    }
+    const { data } = await httpsCallable<void, PingResponse>(
+      functions,
+      "ping"
+    )(); // direct invocation of function
     const responseTime = (performance.now() - startTime).toFixed(2);
-    result.value = `${data} : ${responseTime} ms`;
+    result.value = `${data.message} : ${responseTime} ms`;
   } catch (error) {
     console.error("Error calling function:", error);
     result.value = "Error: " + error.message;

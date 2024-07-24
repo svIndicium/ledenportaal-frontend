@@ -11,17 +11,12 @@
       <div class="py-6" />
       <div v-if="!authStore.isLoggedIn">
         <div class="text-center">
-          <v-text-field
-            v-model="username"
-            label="E-mailadres"
-            outlined
-            dense
-            hide-details
-          />
+          <v-text-field v-model="username" label="E-mailadres" outlined dense
+            ><template #details>
+              Gebruik het e-mailadres dat je hebt opgegeven bij je inschrijving.
+            </template></v-text-field
+          >
         </div>
-        <p class="text-left text-caption">
-          Gebruik het e-mailadres dat je hebt opgegeven bij je inschrijving.
-        </p>
         <div class="py-2" />
         <div class="text-center">
           <v-text-field
@@ -29,9 +24,12 @@
             label="Wachtwoord"
             outlined
             dense
-            hide-details
+            hide-details="auto"
             type="password"
-          />
+            ><template #details class="error">
+              This is where an error can be shown.
+            </template></v-text-field
+          >
         </div>
         <div class="py-4" />
         <v-row justify="center" class="mb-4">
@@ -46,6 +44,8 @@
         </v-row>
       </div>
       <div v-else>
+        <p class="text-center">Logged in as {{ auth.currentUser?.email }}</p>
+        <div class="py-4" />
         <v-row justify="center" class="mb-4">
           <v-col cols="auto">
             <v-btn color="primary" @click="logout"> Uitloggen </v-btn>
@@ -81,7 +81,31 @@ function login() {
       console.log("User logged-in as: " + userCredential.user.email);
     })
     .catch((error) => {
-      console.log("User login failed: " + error.code + " - " + error.message);
+      const code = error.code;
+      const message = error.message;
+
+      switch (code) {
+        case "auth/network-request-failed":
+          window.alert(
+            "Could not connect to the authentication server. Is your internet down?"
+          );
+          break;
+        case "auth/invalid-email":
+          window.alert("Invalid email format.");
+          break;
+        case "auth/missing-password":
+          window.alert("Please input a password.");
+          break;
+        case "auth/user-not-found":
+          window.alert("User does not exist, please register.");
+          break;
+        case "auth/user-disabled":
+          window.alert("User has been disabled, contact bestuur@indicium.hu");
+          break;
+        default:
+          console.error(`User login failed: ${code} - ${message}`);
+          break;
+      }
     });
 }
 
@@ -91,9 +115,24 @@ function register() {
       console.log("User created as: " + userCredential.user.email);
     })
     .catch((error) => {
-      console.log(
-        "User creation failed: " + error.code + " - " + error.message
-      );
+      const code = error.code;
+      const message = error.message;
+
+      switch (code) {
+        case "auth/email-already-exists":
+          window.alert(
+            "This email is already in use, if you think this is an error, contact bestuur@indicium.hu"
+          );
+          break;
+        case "auth/weak-password":
+          window.alert(
+            "Invalid password. Password must be at least 6 characters long."
+          );
+          break;
+        default:
+          console.error(`User creation failed: ${code} - ${message}`);
+          break;
+      }
     });
 }
 

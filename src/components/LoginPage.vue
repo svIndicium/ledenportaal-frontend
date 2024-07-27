@@ -47,7 +47,10 @@
         </v-row>
       </div>
       <div v-else>
-        <p class="text-center">Logged in as {{ auth.currentUser?.email }}</p>
+        <p class="text-center">
+          Logged in as {{ conscriboId }}::
+          {{ auth.currentUser?.email }}
+        </p>
         <div class="py-4" />
         <v-row justify="center" class="mb-4">
           <v-col cols="auto">
@@ -60,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watchEffect } from "vue";
 import { useAuthStore } from "../stores/auth"; // Adjust the import path as needed
 import {
   getAuth,
@@ -73,11 +76,30 @@ import { functions } from "../main";
 
 const auth = getAuth();
 const authStore = useAuthStore();
+const conscriboId = ref();
 
 const username = ref("");
 const password = ref("");
 
 const result = ref("Ping");
+
+const updateConscriboId = async () => {
+  if (auth.currentUser) {
+    try {
+      const result = await auth.currentUser.getIdTokenResult();
+      conscriboId.value = result?.claims?.conscriboId || null;
+    } catch (error) {
+      console.error("Failed to get conscriboId:", error);
+      conscriboId.value = null;
+    }
+  } else {
+    conscriboId.value = null;
+  }
+};
+
+watchEffect(() => {
+  updateConscriboId();
+});
 
 const ping = async () => {
   result.value = "Pinging...";
@@ -98,7 +120,7 @@ const ping = async () => {
   }
 };
 
-onMounted(() => {
+onMounted(async () => {
   authStore.initializeAuthListener();
 });
 

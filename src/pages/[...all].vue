@@ -1,21 +1,19 @@
 <!--Catch-all route-->
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
-import { getAuth } from "firebase/auth";
+import { useAuthStore } from "../stores/auth";
+
+const authStore = useAuthStore();
 
 const router = useRouter()
 
-onMounted(() => {
-  if (!getAuth().currentUser) {
-    router.push('/login')
+onBeforeMount(() => {
+  if (!authStore.isLoggedIn) {
+    router.replace('/login')
   } else {
-    router.push('/dashboard')
+    router.replace('/dashboard')
   }
 })
 </script>
-
-<template>
-  <div>DENIED</div>
-</template>

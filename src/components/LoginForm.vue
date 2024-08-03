@@ -22,13 +22,15 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useFirebaseAuth } from 'vuefire';
 
-const emit = defineEmits(['login-success']);
+const auth = useFirebaseAuth();
 
-const auth = getAuth();
 const username = ref('');
 const password = ref('');
+
+const emit = defineEmits(['login-success']);
 
 const login = () => {
   signInWithEmailAndPassword(auth, username.value, password.value)

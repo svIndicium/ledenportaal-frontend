@@ -22,13 +22,14 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { useFirebaseAuth } from 'vuefire'
 
-const emit = defineEmits(['register-success']);
-
-const auth = getAuth();
+const auth = useFirebaseAuth();
 const username = ref('');
 const password = ref('');
+
+const emit = defineEmits(['register-success']);
 
 const register = () => {
   createUserWithEmailAndPassword(auth, username.value, password.value)

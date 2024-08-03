@@ -34,22 +34,14 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { httpsCallable } from 'firebase/functions';
 import { functions } from '../main';
-import { getAuth } from "firebase/auth";
 
 const router = useRouter();
 const tab = ref('login');
 const result = ref('Ping');
-
-onMounted(() => {
-  if (getAuth().currentUser) {
-    router.push('/dashboard')
-  }
-})
-
 
 const onLoginSuccess = () => {
   router.push('/dashboard');

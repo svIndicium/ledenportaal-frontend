@@ -3,7 +3,7 @@
     <v-responsive class="align-center mx-auto" max-width="800">
       <h1 class="text-h3 mb-6">User Dashboard</h1>
       <p class="text-body-1">
-        Logged in as {{ conscriboId }}:: {{ auth.currentUser?.email }}
+        Logged in as {{ user.displayName }}: {{ conscriboId }}
       </p>
       <v-row justify="center" class="mt-6">
         <v-col cols="auto">
@@ -15,50 +15,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watchEffect } from 'vue';
-import { getAuth } from 'firebase/auth';
+import { onMounted, ref} from "vue";
 import { useRouter } from 'vue-router';
+import { useCurrentUser, useFirebaseAuth } from 'vuefire';
+import { definePage } from "unplugin-vue-router/runtime";
 
-const router = useRouter();
-const auth = getAuth();
-const conscriboId = ref();
-
-defineOptions({
-  meta: {
-    requiresAuth: true
-  }
+definePage({
+  meta: { requiresAuth: true },
 })
 
-onMounted(() => {
-  if (!auth.currentUser) {
-    router.push('/login');
+const auth = useFirebaseAuth();
+const user = useCurrentUser();
+const router = useRouter();
+
+const conscriboId = ref(null);
+
+onMounted(async () => {
+  if (user.value) {
+    const result = await user.value.getIdTokenResult()
+    conscriboId.value = result.claims.conscriboId
   }
-});
-
-const updateConscriboId = async () => {
-  if (auth.currentUser) {
-    try {
-      const result = await auth.currentUser.getIdTokenResult();
-      conscriboId.value = result?.claims?.conscriboId || null;
-    } catch (error) {
-      console.error('Failed to get conscriboId:', error);
-      conscriboId.value = null;
-    }
-  } else {
-    conscriboId.value = null;
-  }
-};
-
-watchEffect(() => {
-  updateConscriboId();
-});
-
-// function getConscriboData() {
-//   httpsCallable(functions, 'retrieveRelationData').call("<TARGET_conscriboId_HERE>")
-//     .then((result) => {
-//       const data = result.data;
-//     })
-// }
+})
 
 const logout = () => {
   auth.signOut().then(() => {

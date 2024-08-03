@@ -11,7 +11,7 @@
 import { createRouter, createWebHistory } from "vue-router/auto";
 // @ts-expect-error
 import { setupLayouts } from "virtual:generated-layouts";
-import { getAuth } from "firebase/auth";
+import { useCurrentUser } from "vuefire";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,15 +19,14 @@ const router = createRouter({
 });
 
 // Navigation guard for auth
-router.beforeEach((to, from, next) => {
-  const auth = getAuth();
-
-  if (to.meta.requiresAuth && !auth.currentUser) {
-    next('/login')
-  } else if (to.path === '/login' && auth.currentUser) {
-    next('/dashboard')
-  } else {
-    next()
+router.beforeEach(async (to) => {
+  const currentUser = useCurrentUser();
+  if (to.meta.requiresAuth && !currentUser.value) {
+    // If not logged in, redirect to /login
+    router.push("/login")
+  } else if (to.path === "/login" && currentUser.value) {
+    // If already logged in, redirect to /dashboard
+     router.push("/dashboard")
   }
 })
 

@@ -20,6 +20,7 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth, connectAuthEmulator } from "firebase/auth";
 import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
 // https://firebase.google.com/docs/web/setup#available-libraries
+import { VueFire, VueFireAuth } from 'vuefire';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBWeZcG1wAfFFruaQCyFwcJEkMWy5ByOy8",
@@ -34,10 +35,10 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const firebaseapp = initializeApp(firebaseConfig);
-const analytics = getAnalytics(firebaseapp);
-const auth = getAuth(firebaseapp);
-const functions = getFunctions(firebaseapp, "europe-west1");
+export const firebaseApp = initializeApp(firebaseConfig);
+const analytics = getAnalytics(firebaseApp);
+const auth = getAuth(firebaseApp);
+const functions = getFunctions(firebaseApp, "europe-west1");
 
 if (process.env.NODE_ENV === "development") {
   connectFunctionsEmulator(functions, "localhost", 5001);
@@ -55,6 +56,13 @@ Go to the folder and run \`npm run serve\`.
 const app = createApp(App);
 
 registerPlugins(app);
+
+app.use(VueFire, {
+  firebaseApp,
+  modules: [
+    VueFireAuth(),
+  ],
+})
 
 app.mount("#app");
 

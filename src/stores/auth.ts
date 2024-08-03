@@ -1,22 +1,12 @@
-import { defineStore } from "pinia";
-import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+import { defineStore } from 'pinia'
+import { useCurrentUser } from 'vuefire'
+import { computed } from 'vue'
 
-export const useAuthStore = defineStore("auth", {
-  state: () => ({
-    user: null as User | null,
-  }),
-  getters: {
-    isLoggedIn: (state) => !!state.user,
-  },
-  actions: {
-    initializeAuthListener() {
-      const auth = getAuth();
-      onAuthStateChanged(auth, (user) => {
-        this.user = user;
-      });
-    },
-    setUser(user: User | null) {
-      this.user = user;
-    },
-  },
-});
+export const useAuthStore = defineStore('auth', () => {
+  const user = useCurrentUser();
+
+  // Alternative to useCurrentUser().value
+  const isLoggedIn = computed(() => !!user.value);
+
+  return { user, isLoggedIn }
+})

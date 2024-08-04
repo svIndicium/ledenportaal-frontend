@@ -6,11 +6,16 @@
       outlined
       dense
     >
-
       <template #details>
-        <span class="cursor-pointer" @mousedown="openPanel">
-          Zie <span class="text-decoration-underline"> informatie </span>
-        </span>
+        <v-bottom-sheet inset>
+          <template v-slot:activator="{ props }">
+            <span v-bind="props" class="cursor-pointer">
+              Zie <span class="text-decoration-underline"> informatie  </span> &blacktriangledown;
+            </span>
+          </template>
+          <RegisterInfoCard/>
+        </v-bottom-sheet>
+
       </template>
     </v-text-field>
     <v-text-field
@@ -20,29 +25,6 @@
       dense
       type="password"
     />
-
-    <v-expansion-panels variant="accordion" :model-value="informationPanel">
-      <v-expansion-panel
-        title="Informatie"
-      >
-        <v-expansion-panel-text>
-          <v-list>
-            <v-list-item>
-              <v-list-item-title>E-mailadres</v-list-item-title>
-              <v-list-item-subtitle>Gebruik het e-mailadres dat je hebt opgegeven bij je inschrijving</v-list-item-subtitle>
-            </v-list-item>
-
-            <v-list-item>
-              <v-list-item-title>Wachtwoord</v-list-item-title>
-              <v-list-item-subtitle>Gebruik altijd een sterk en veilig wachtwoord.</v-list-item-subtitle>
-              <v-list-item-subtitle>Indicium heeft geen toegang tot wachtwoorden.</v-list-item-subtitle>
-              <v-list-item-subtitle>Authenticatie gaat via Google met Firebase.</v-list-item-subtitle>
-            </v-list-item>
-          </v-list>
-        </v-expansion-panel-text>
-      </v-expansion-panel>
-    </v-expansion-panels>
-
     <v-btn type="submit" color="secondary" block class="mt-4">
       Registreren
     </v-btn>
@@ -58,10 +40,6 @@ const auth = useFirebaseAuth();
 const username = ref('');
 const password = ref('');
 
-let informationPanel = ref(null);
-
-const openPanel = () => informationPanel.value = [0];
-
 const emit = defineEmits(['register-success']);
 
 const register = () => {
@@ -76,10 +54,10 @@ const register = () => {
 
       switch (code) {
         case 'auth/email-already-exists':
-          window.alert('This email is already in use, if you think this is an error, contact bestuur@indicium.hu');
+          window.alert('Dit e-mailadres is reeds in gebruik. Als je denkt dat dit niet klopt, contacteer bestuur@indicium.hu');
           break;
         case 'auth/weak-password':
-          window.alert('Invalid password. Password must be at least 6 characters long.');
+          window.alert('Ongeldig of onveilig wachtwoord. Wachtwoord moet uit minstens 6 tekens bestaan.');
           break;
         default:
           console.error(`User creation failed: ${code} - ${message}`);

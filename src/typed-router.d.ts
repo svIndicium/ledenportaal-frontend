@@ -20,7 +20,14 @@ declare module 'vue-router/auto-routes' {
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/[...all]': RouteRecordInfo<'/[...all]', '/:all(.*)', { all: ParamValue<true> }, { all: ParamValue<false> }>,
-    '/dashboard': RouteRecordInfo<'/dashboard', '/dashboard', Record<never, never>, Record<never, never>>,
+    '/changelog': RouteRecordInfo<'/changelog', '/changelog', Record<never, never>, Record<never, never>>,
+    '/contact': RouteRecordInfo<'/contact', '/contact', Record<never, never>, Record<never, never>>,
+    '/dashboard/': RouteRecordInfo<'/dashboard/', '/dashboard', Record<never, never>, Record<never, never>>,
+    '/dashboard/contact': RouteRecordInfo<'/dashboard/contact', '/dashboard/contact', Record<never, never>, Record<never, never>>,
+    '/dashboard/gegevens': RouteRecordInfo<'/dashboard/gegevens', '/dashboard/gegevens', Record<never, never>, Record<never, never>>,
+    '/dashboard/ledenlijst': RouteRecordInfo<'/dashboard/ledenlijst', '/dashboard/ledenlijst', Record<never, never>, Record<never, never>>,
+    '/dashboard/tickets': RouteRecordInfo<'/dashboard/tickets', '/dashboard/tickets', Record<never, never>, Record<never, never>>,
+    '/faq': RouteRecordInfo<'/faq', '/faq', Record<never, never>, Record<never, never>>,
     '/login': RouteRecordInfo<'/login', '/login', Record<never, never>, Record<never, never>>,
     '/placeholder': RouteRecordInfo<'/placeholder', '/placeholder', Record<never, never>, Record<never, never>>,
   }

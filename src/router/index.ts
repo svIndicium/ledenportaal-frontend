@@ -26,7 +26,9 @@ router.beforeEach(async (to) => {
     return "/login"
   } else if (to.path === "/login" && currentUser) {
     // If already logged in, redirect to /dashboard
-     return "/dashboard"
+    return "/dashboard"
+  } else if (to.path === "/" && !currentUser) {
+    return "/login"
   }
 })
 

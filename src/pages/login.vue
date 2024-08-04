@@ -50,7 +50,7 @@ const onLoginSuccess = () => {
 const onRegisterSuccess = () => {
   // TODO: Alert on the page instead
   alert("Registratie succesvol");
-  tab.value = 'login';
+  router.push('/dashboard');
 };
 
 const ping = async () => {

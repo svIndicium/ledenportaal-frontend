@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { useFirebaseAuth } from 'vuefire'
 
 const auth = useFirebaseAuth();
@@ -45,7 +45,7 @@ const emit = defineEmits(['register-success']);
 const register = () => {
   createUserWithEmailAndPassword(auth, username.value, password.value)
     .then((userCredential) => {
-      console.log('User created as: ' + userCredential.user.email);
+      sendEmailVerification(userCredential.user).then(() => {});
       emit('register-success');
     })
     .catch((error) => {

@@ -16,7 +16,7 @@
                            @error="onError" />
           </v-card-text>
           <v-card-actions v-if="showContinueButton">
-            <v-btn color="primary" @click="handleContinue"> Naar dashboard </v-btn>
+            <v-btn color="secondary" @click="handleContinue"> Naar dashboard </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>

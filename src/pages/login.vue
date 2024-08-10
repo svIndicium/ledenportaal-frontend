@@ -28,6 +28,10 @@
         <v-col cols="auto">
           <v-btn @click="ping"> {{ result }} </v-btn>
         </v-col>
+        <v-col cols="auto">
+<!--          TODO: Implement-->
+          <v-btn> Wachtwoord vergeten </v-btn>
+        </v-col>
       </v-row>
     </v-responsive>
   </v-container>

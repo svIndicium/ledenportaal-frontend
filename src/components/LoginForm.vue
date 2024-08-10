@@ -14,7 +14,7 @@
       dense
       type="password"
     />
-    <v-btn type="submit" color="primary" block class="mt-4">
+    <v-btn type="submit" color="primary" :loading="isLoading" block class="mt-4">
       Inloggen
     </v-btn>
   </v-form>
@@ -29,10 +29,12 @@ const auth = useFirebaseAuth();
 
 const username = ref('');
 const password = ref('');
+const isLoading = ref(false);
 
 const emit = defineEmits(['login-success']);
 
 const login = () => {
+  isLoading.value = true;
   signInWithEmailAndPassword(auth, username.value, password.value)
     .then((userCredential) => {
       console.log('User logged-in as: ' + userCredential.user.email);
@@ -62,6 +64,9 @@ const login = () => {
           console.error(`User login failed: ${code} - ${message}`);
           break;
       }
+    })
+    .finally(() => {
+      isLoading.value = false;
     });
 };
 </script>

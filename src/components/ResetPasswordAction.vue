@@ -57,7 +57,7 @@ const verifyCode = () => {
 
 const handleResetPassword = () => {
   if (newPassword.value !== confirmPassword.value) {
-    emit('error', 'De ingevoerde wachtwoorden zijn niet hetzelfde.');
+    emit('error', 'De ingevoerde wachtwoorden komen niet overeen.');
     return;
   }
 

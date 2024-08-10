@@ -25,7 +25,7 @@
       dense
       type="password"
     />
-    <v-btn type="submit" color="secondary" block class="mt-4">
+    <v-btn type="submit" color="secondary" :loading="isLoading" block class="mt-4">
       Registreren
     </v-btn>
   </v-form>
@@ -39,10 +39,12 @@ import {useFirebaseAuth, useCurrentUser} from 'vuefire'
 const auth = useFirebaseAuth();
 const username = ref('');
 const password = ref('');
+const isLoading = ref(false);
 
 const emit = defineEmits(['register-success']);
 
 const register = () => {
+  isLoading.value = true;
   createUserWithEmailAndPassword(auth, username.value, password.value)
     .then((userCredential) => {
       const currentUser = useCurrentUser();
@@ -64,6 +66,9 @@ const register = () => {
           console.error(`User creation failed: ${code} - ${message}`);
           break;
       }
+    })
+    .finally(() => {
+      isLoading.value = false;
     });
 };
 </script>

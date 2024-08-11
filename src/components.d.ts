@@ -16,6 +16,7 @@ declare module 'vue' {
     ResetPasswordAction: typeof import('./components/ResetPasswordAction.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    VerifiedEmailCheck: typeof import('./components/VerifiedEmailCheck.vue')['default']
     VerifyEmailAction: typeof import('./components/VerifyEmailAction.vue')['default']
   }
 }

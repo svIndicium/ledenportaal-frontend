@@ -8,14 +8,17 @@
     <script>
       (function () {
         const erudaSRC = "//cdn.jsdelivr.net/npm/eruda";
-
+        const erudaVueSRC =
+          "//cdn.jsdelivr.net/npm/eruda-vue@1.0.1/eruda-vue.min.js";
         if (
           !/eruda=true/.test(window.location) &&
           localStorage.getItem("active-eruda") != "true"
         )
           return;
         document.write("<scr" + 'ipt src="' + erudaSRC + '"></scr' + "ipt>");
+        document.write("<scr" + 'ipt src="' + erudaVueSRC + '"></scr' + "ipt>");
         document.write("<scr" + "ipt>eruda.init();</scr" + "ipt>");
+        document.write("<scr" + "ipt>eruda.add(erudaVue);</scr" + "ipt>");
       })();
     </script>
   </head>

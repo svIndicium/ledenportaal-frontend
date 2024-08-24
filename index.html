@@ -5,6 +5,19 @@
     <link rel="icon" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ledenportaal - INDEV</title>
+    <script>
+      (function () {
+        const erudaSRC = "//cdn.jsdelivr.net/npm/eruda";
+
+        if (
+          !/eruda=true/.test(window.location) &&
+          localStorage.getItem("active-eruda") != "true"
+        )
+          return;
+        document.write("<scr" + 'ipt src="' + erudaSRC + '"></scr' + "ipt>");
+        document.write("<scr" + "ipt>eruda.init();</scr" + "ipt>");
+      })();
+    </script>
   </head>
 
   <body>
